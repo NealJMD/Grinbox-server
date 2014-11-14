@@ -1,0 +1,9 @@
+## Grinbox
+
+Grinbox is an extension for Google Chrome I created for my junior independent work in the spring semester of 2013. Users see their Gmail inbox color coded according to the content of the email. Angry emails are red, friendly informal messages are green, business emails are blue, and promotional emails are yellow. The project works end to end and was demoed for the final presentation. I was excited to polish it and release it in the Chrome web store, but soon after I finished, Gmail debuted the tabbed inbox view. I found that it was simply better executed and conceived than my approach and I decided not to pursue it. This is not a fully polished, production ready product, but an academic demo and should be understood accordingly - there were some less-than-ideal coding decisions made in order to get the demo ready to go.
+
+This repo is the server side of the operation. The Chrome extension that makes requests to it can be found [here](https://github.com/NealJMD/Grinbox-browser). 
+
+## The Server
+
+The server, which is found in server.py, uses web.py 0.37 to handle http requests coming from the Chrome extension. When first-time users loads Gmail, they are prompted to log in with OAuth to give us permission to download and read their email. Once we hold their tokens in our database, we process their email and classify it along three dimensions - formality (formal to informal), sentiment (positive to negative), and commercialism (personal to commercial). These use Bayesian classifiers trained on IRC chat logs, the Reuters news corpus, and Yelp reviews to weight the importance of various features of the content and formatting. The server then sends the classifications to the browser extension.
